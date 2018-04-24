@@ -1,0 +1,95 @@
+﻿@model PagedList.IPagedList<CMS_WebSystem.Models.BookingInfo>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Booking Page</h2>
+@if (Session["userType"].ToString() == "Agent")
+{
+    <button type="button" onclick="location.href='@Url.Action("Create", "Booking")'" style="margin:10px;height:30px;width:180px;text-align:center">Create New Booking</button>
+}
+
+@using (Html.BeginForm("ViewBooking", "Booking", FormMethod.Get))
+{
+    <p style="margin-top:10px;margin-bottom:15px;">
+        Find by Agent Name / Location: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Booking Id", "ViewBooking", new { sortOrder = ViewBag.BkIdSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Booking Date", "ViewBooking", new { sortOrder = ViewBag.BkDateSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Schedule Id", "ViewBooking", new { sortOrder = ViewBag.ScheduleIdSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Departure Location", "ViewBooking", new { sortOrder = ViewBag.DeptLocationSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Arrival Location", "ViewBooking", new { sortOrder = ViewBag.ArrvlLocationSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Departure Date", "ViewBooking", new { sortOrder = ViewBag.DeptDateSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Arrival Date", "ViewBooking", new { sortOrder = ViewBag.ArrvlDateSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            <a>Schedule Status</a>
+        </th>
+        <th>
+            @Html.ActionLink("Agent", "ViewBooking", new { sortOrder = ViewBag.AgentNameSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.booking.Bk_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.booking.Bk_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Sch_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Departure_Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Arrival_Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Dept_DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Arrvl_DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.schedule.Sch_Status)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.agent.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.booking.Bk_Id })
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Bk_Id })*@
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ViewBooking",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

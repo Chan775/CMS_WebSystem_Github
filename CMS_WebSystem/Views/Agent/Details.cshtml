@@ -1,0 +1,51 @@
+﻿@model CMS_WebSystem.Models.User_tbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Agent Detail</h2>
+
+<div>
+    <hr />
+    <div class="form-horizontal" style="margin-left:20px;">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Edit |", "Edit", new { id = Model.Id, @class = "btn btn-primary btn-large" })
+                @Html.ActionLink(" Back to List", "AgentManagement", new { @class = "btn btn-primary btn-large" })
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CMS Web Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+    <style>
+        .navbar {
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                li a:hover {
+                    background-color: #111;
+                }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    <header class="navbar">
+        <ul>
+            <li>  @Html.ActionLink("Maersk Line - CMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            @if (Session["userType"].ToString() != null && Session["userType"].ToString() == "Admin")
+            {
+                <li><a href="@Url.Action("AgentManagement", "Agent")">Agent Management</a></li>
+                <li><a href="@Url.Action("ScheduleManagement", "Schedule")">Schdule Management</a></li>
+                <li><a href="@Url.Action("ViewBooking", "Booking")">View Booking</a></li>
+
+            }
+            @if (Session["userType"].ToString() != null && Session["userType"].ToString() == "Agent")
+            {
+                <li><a href="@Url.Action("CustomerManagement", "Customer")">Customer Management</a></li>
+                <li><a href="@Url.Action("ItemManagement", "Item")">Item Management</a></li>
+                <li><a href="@Url.Action("ViewBooking", "Booking")">Book Vessel</a></li>
+            }
+            <li>@Html.ActionLink("Logout", "logOut", "Login")</li>
+        </ul>
+
+    </header>
+
+    <div class=" body-content" style="margin-top:10px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p><b>General Line:</b></p>
+            <p><b>Tel:</b> +603-123123456 / 1 222 333 888 </p>
+            <p><b>Email:</b> maerskLine@gmail.com</p>
+            <p><b>Mon - Friday</b> 8:30 AM - 7PM</p>
+            <p>&copy; @DateTime.Now.Year - Maersk Line </p>
+        </footer>
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+
+                alert("@TempData["message"].ToString()");
+
+
+    };
+
+        </script>
+    }
+    <script type="text/javascript">
+
+        $("body").on("click", "#btnAdd", function () {
+            //Reference the Name and Country TextBoxes.
+            var txtItemId = $("#txtItemId");
+            var txtContainerNo = $("#txtContainerNo");
+
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tblItems > TBODY")[0];
+
+            //Add Row.
+            var row = tBody.insertRow(-1);
+
+            //Add Item cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(txtItemId.val());
+
+            //Add Container cell.
+            cell = $(row.insertCell(-1));
+            cell.html(txtContainerNo.val());
+
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<input />");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");
+            btnRemove.val("Remove");
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            txtItemId.val("");
+            txtContainerNo.val("");
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Do you want to delete: " + name)) {
+                //Get the reference of the Table.
+                var table = $("#tblItems")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+            }
+        };
+
+        
+    </script>
+   
+    <script type="text/javascript">
+    $("#schIdDropdownlist").change(function () {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("GetScheduleInfo", "Booking")',
+            data: { scheduleId: $("#schIdDropdownlist").val() },
+            dataType: "json",
+            success: function (data) {
+                $("#dprt_location").val(data[0]);
+                $("#arrvl_location").val(data[1]);
+                $("#dprt_date").val(data[2]);
+                $("#arrvl_date").val(data[3]);
+                $("#vesselName").val(data[4]);
+                $("#availableContainer").val(data[5]);
+            }
+            });
+    })
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

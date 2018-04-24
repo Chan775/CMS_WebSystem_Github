@@ -1,0 +1,85 @@
+﻿@model PagedList.IPagedList<CMS_WebSystem.Models.Schedule_tbl>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Schedule Management Page</h2>
+<button type="button" onclick="location.href='@Url.Action("Create", "Schedule")'" style="margin:10px;height:30px;width:180px;text-align:center">Create New Schedule</button>
+@using (Html.BeginForm("ScheduleManagement", "Schedule", FormMethod.Get))
+{
+    <p style="margin-top:10px;margin-bottom:15px;">
+        Find by Id / Location: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Schedule Id", "ScheduleManagement", new { sortOrder = ViewBag.ScheduleIdSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Departure Location", "ScheduleManagement", new { sortOrder = ViewBag.DeptLocationSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Arrival Location", "ScheduleManagement", new { sortOrder = ViewBag.ArrvlLocationSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Departure Date", "ScheduleManagement", new { sortOrder = ViewBag.DeptDateSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Arrival Date", "ScheduleManagement", new { sortOrder = ViewBag.ArrvlDateSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            <a>Ship Name</a>
+        </th>
+        <th>
+            @Html.ActionLink("Available Container", "ScheduleManagement", new { sortOrder = ViewBag.ContainerSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            <a>Status</a>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sch_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure_Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arrival_Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dept_DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arrvl_DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ship_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Available_Container)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sch_Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Sch_Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Sch_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Sch_Id })
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ScheduleManagement",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

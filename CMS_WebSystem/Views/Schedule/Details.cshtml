@@ -1,0 +1,63 @@
+﻿@model CMS_WebSystem.Models.Schedule_tbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+
+<div>
+    <hr />
+    <div class="form-horizontal" style="margin-left:20px;">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sch_Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Sch_Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Departure_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Departure_Location, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Arrival_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Arrival_Location, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dept_DateTime, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Dept_DateTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Arrvl_DateTime, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Arrvl_DateTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ship_Name, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Ship_Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Available_Container, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Available_Container, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("Edit |", "Edit", new { id = Model.Sch_Id, @class = "btn btn-primary btn-large" })
+                @Html.ActionLink(" Back to List", "ScheduleManagement", new { @class = "btn btn-primary btn-large" })
+            </div>
+        </div>
+    </div>
+</div>

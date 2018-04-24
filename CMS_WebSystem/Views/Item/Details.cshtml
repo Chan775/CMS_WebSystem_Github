@@ -1,0 +1,50 @@
+﻿@model CMS_WebSystem.Models.Item_tbl
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Item Details</h2>
+
+<div>
+    <hr />
+    <div class="form-horizontal" style="margin-left:20px;">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Itm_Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Itm_Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Itm_Name, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Itm_Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Itm_Description, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.Itm_Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cust_Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.Cust_Id, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cust_Name, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-4">
+                @Html.DisplayFor(model => model.Cust_Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink(" Back to List", "ItemManagement", new { @class = "btn btn-primary btn-large" })
+            </div>
+        </div>
+    </div>
+</div>

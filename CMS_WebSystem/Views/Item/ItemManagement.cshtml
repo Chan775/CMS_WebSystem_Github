@@ -1,0 +1,56 @@
+﻿@model PagedList.IPagedList<CMS_WebSystem.Models.Item_tbl>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Item Management Page</h2>
+
+<button type="button" onclick="location.href='@Url.Action("Create", "Item")'" style="margin:10px;height:30px;width:180px;text-align:center">Register New Item</button>
+@using (Html.BeginForm("ItemManagement", "Item", FormMethod.Get))
+{
+    <p style="margin-top:10px;margin-bottom:15px;">
+        Find by Name / Description: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Item Name", "ItemManagement", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Item Description", "ItemManagement", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter = ViewBag.currentFilter })
+        </th>
+        <th>
+            <a>Customer Name</a>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Itm_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Itm_Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cust_Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Itm_Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Itm_Id })
+            </td>
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ItemManagement",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

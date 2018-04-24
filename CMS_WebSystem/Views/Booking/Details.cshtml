@@ -1,0 +1,106 @@
+﻿@model CMS_WebSystem.Models.BookingInfo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Booking Details</h2>
+
+
+<div>
+    <hr />
+    <div class="form-horizontal" style="margin-left:20px;">
+        <div class="form-group">
+            @Html.LabelFor(model => model.booking.Bk_Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.booking.Bk_Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Sch_Id, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.schedule.Sch_Id, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Departure_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-5">
+                @Html.DisplayFor(model => model.schedule.Departure_Location, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Arrival_Location, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.schedule.Arrival_Location, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Dept_DateTime, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.schedule.Dept_DateTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Arrvl_DateTime, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.schedule.Arrvl_DateTime, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.schedule.Sch_Status, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.schedule.Sch_Status, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.agent.Name, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            <div class="col-md-3">
+                @Html.DisplayFor(model => model.agent.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    <a>Item Id</a>
+                </th>
+                <th>
+                    <a>Item Name</a>
+                </th>
+                <th>
+                    <a>Item Description</a>
+                </th>
+                <th>
+                    <a>Number of Container</a>
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.bookingItem)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Itm_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item_Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Container_No)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink(" Back to List", "ViewBooking", new { @class = "btn btn-primary btn-large" })
+            </div>
+        </div>
+    </div>
+</div>

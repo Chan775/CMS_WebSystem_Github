@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <link href="~/Style/loginStyleSheet.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>loginPage</title>
+</head>
+<body>
+    <div class="logo"></div>
+    <div class="login-block" style="margin-top:10px">
+        <h1>Container Management System (CMS)</h1>
+        @using (Html.BeginForm("LoginAction", "Login", FormMethod.Post))
+    {
+        <input type="text" value="" placeholder="Email Address" id="id" name="email" />
+        <input type="password" value="" placeholder="Password" id="password" name="password" />
+        <button type="submit" value="Login">Login</button>
+        <a href="@Url.Action("InfoPage", "Login")">Information</a>
+
+}
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+
+        alert("@TempData["message"].ToString()");
+
+    };
+
+        </script>
+    }
+</body>
+
+</html>
+

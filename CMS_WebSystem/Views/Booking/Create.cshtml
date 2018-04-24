@@ -1,0 +1,119 @@
+﻿@model IEnumerable<CMS_WebSystem.Models.BookingItem_tbl>
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Booking Page</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Schedule Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="margin-top:5px;margin-bottom:10px;">
+                @Html.DropDownList("Sch_Id", ViewBag.ScheduleIdList as IEnumerable<SelectListItem>, "--Select--", new { @id = "schIdDropdownlist" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Departure Location", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="dprt_location" type="text" readonly />
+            </div>
+            @Html.Label("Arrival Location", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="arrvl_location" type="text" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Departure Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="dprt_date" type="text" readonly />
+            </div>
+            @Html.Label("Arrival Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="arrvl_date" type="text" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Vessel Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="vesselName" type="text" readonly />
+            </div>
+            @Html.Label("Available Container", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2" style="margin-bottom:10px;">
+                <input id="availableContainer" type="text" readonly />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <table id="tblItems" class="table" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="width:150px">Item</th>
+                <th style="width:150px">Container Number</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <td>@booking.Itm_Id</td>
+                    <td>@booking.Container_No</td>
+                    <td><input type="button" value="Remove" onclick="Remove(this)" /></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>@Html.DropDownList("Item_Id", (IEnumerable<SelectListItem>)ViewBag.ItemList, String.Empty, new { @id = "txtItemId" })</td>
+                <td>@Html.DropDownList("Container_No", (IEnumerable<SelectListItem>)ViewBag.ContainerCount, String.Empty, new { @id = "txtContainerNo" })</td>
+                <td><input type="button" id="btnAdd" value="Add" /></td>
+            </tr>
+        </tfoot>
+    </table>
+    <br />
+    <input type="button" id="saveBooking" value="Save Booking" />
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ViewBooking")
+</div>
+<script type="text/javascript">
+
+        $('#saveBooking').click(function () {
+            //Loop through the Table rows and build a JSON array.
+            var schId = $("#schIdDropdownlist").val();
+            var items = new Array();
+            $("#tblItems TBODY TR").each(function () {
+                var row = $(this);
+                var item = {};
+                item.Itm_Id = row.find("TD").eq(0).html();
+                item.Container_No = row.find("TD").eq(1).html();
+                items.push(item);
+            });
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create","Booking")',
+                data: { items: items, schId: schId },
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    window.location.href = r;
+                }
+
+        }); });
+   
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

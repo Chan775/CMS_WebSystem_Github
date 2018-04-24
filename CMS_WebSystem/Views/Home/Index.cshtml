@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Welcome to</h1>
+    <h1>Maersk Line - Container Management System (CMS)</h1>
+    <p class="lead">@Session["userType"].ToString(), @Session["userName"].ToString()</p>
+</div>
+@if (Session["userType"].ToString() != null && Session["userType"].ToString() == "Admin")
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Agent Management</h2>
+            <p>
+                CMS allow Admin to manage agents information like register new agent, view registered agents information, edit agent information, etc.
+            </p>
+
+        </div>
+        <div class="col-md-4">
+            <h2>View Booking</h2>
+            <p>
+                Admin able to view all the booking details like booked schedule, customer, items, number of container, booking date and etc
+                which made by the agents
+            </p>
+
+        </div>
+        <div class="col-md-4">
+            <h2>Schedule Management</h2>
+            <p>Admin can manage the schedule for the vessel, example like create new schedule, edit schdule and delete schedule.</p>
+
+        </div>
+    </div>
+}
+@if (Session["userType"].ToString() != null && Session["userType"].ToString() == "Agent")
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Customer Management</h2>
+            <p>
+                CMS allow Agent to manage customer information like register new customer, view registered customer information, edit customer information, etc.
+            </p>
+
+        </div>
+        <div class="col-md-4">
+            <h2>Item Management</h2>
+            <p>
+                Agent able to register items for the customers that will be deliver in container and update items information when needed.
+            </p>
+
+        </div>
+        <div class="col-md-4">
+            <h2>Book Vessel</h2>
+            <p>Agent can help customer to book vessel to deliver their items by selecting available schedule and items to be delivered</p>
+
+        </div>
+    </div>
+}
